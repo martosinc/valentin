@@ -53,7 +53,7 @@ func swear(user string, channel string, messages []string, client *slack.Client)
 	client.PostMessage(channel, slack.MsgOptionAttachments(attachment))
 }
 
-func main() {
+func mainnn() {
 	godotenv.Load(".env")
 
 	messages := []string{}
@@ -131,4 +131,23 @@ func main() {
 	}()
 
 	socketClient.Run()
+}
+
+func main() {
+	token := "xoxb-4842928093063-4858049813043-BF1lNzC6OEegRzXSVAMnyXtY"
+	client := slack.New(token, slack.OptionDebug(false))
+
+	insuleter, err := NewInsultFactory("messages")
+	if err != nil {
+		panic(err)
+	}
+
+	bot := NewBot(
+		client,
+		[]string{"C04R79YQ8LB"},
+		insuleter,
+	)
+	if err := bot.runNotifier(3, 13); err != nil {
+		panic(err)
+	}
 }
